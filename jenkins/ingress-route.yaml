@@ -1,7 +1,7 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
-  name: forwardedProto
+  name: forwarded-proto
   namespace: jenkins
 spec:
   headers:
@@ -20,7 +20,7 @@ spec:
   - kind: Rule
     match: Host(`jenkins.sz.yadadev.com`)
     middlewares:
-    - name: forwardedProto
+    - name: forwarded-proto
     services:
     - name: jenkins
       port: 80
