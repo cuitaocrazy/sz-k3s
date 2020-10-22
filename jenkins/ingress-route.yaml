@@ -1,4 +1,13 @@
 apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: forwardedProto
+spec:
+  headers:
+    sslProxyHeaders:
+      X-Forwarded-Proto: https
+---
+apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: jenkins-websecre
@@ -9,6 +18,8 @@ spec:
   routes:
   - kind: Rule
     match: Host(`jenkins.sz.yadadev.com`)
+    middlewares:
+    - name: forwardedProto
     services:
     - name: jenkins
       port: 80
