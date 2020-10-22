@@ -1,0 +1,19 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: jenkins-websecre
+spec:
+  entryPoints:
+  - websecure
+  routes:
+  - kind: Rule
+    match: Host(`jenkins.sz.yadadev.com`)
+    services:
+    - name: jenkins
+      port: 80
+  tls:
+    certResolver: le
+    domains:
+    - main: yadadev.com
+      sans:
+      - '*.sz.yadadev.com'
