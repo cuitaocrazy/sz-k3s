@@ -1,0 +1,4 @@
+configMapGenerator:
+- name: mvn-settings
+  files:
+  - settings.xml

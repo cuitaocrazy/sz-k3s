@@ -1,0 +1,16 @@
+apiVersion: v1
+data:
+  settings.xml: "<settings xmlns=\"http://maven.apache.org/SETTINGS/1.0.0\"\n  xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n
+    \ xsi:schemaLocation=\"http://maven.apache.org/SETTINGS/1.0.0\n                      https://maven.apache.org/xsd/settings-1.0.0.xsd\">\n
+    \ <localRepository>/usr/share/maven/ref/repository</localRepository>\n  <mirrors>\n
+    \   <mirror>\n        <!--This sends everything else to /public -->\n        <id>aliyun-nexus</id>\n
+    \       <mirrorOf>*</mirrorOf> \n        <url>http://maven.aliyun.com/nexus/content/groups/public/</url>\n
+    \   </mirror>\n    <mirror>\n        <!--This is used to direct the public snapshots
+    repo in the \n            profile below over to a different nexus group -->\n
+    \       <id>aliyun-nexus-public-snapshots</id>\n        <mirrorOf>public-snapshots</mirrorOf>
+    \n        <url>http://maven.aliyun.com/nexus/content/repositories/snapshots/</url>\n
+    \     </mirror>\n    </mirrors>\n</settings>"
+kind: ConfigMap
+metadata:
+  name: mvn-settings
+  namespace: jenkins

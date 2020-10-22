@@ -1,0 +1,19 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: gitlab-websecre
+spec:
+  entryPoints:
+  - websecure
+  routes:
+  - kind: Rule
+    match: Host(`gitlab.sz.yadadev.com`)
+    services:
+    - name: gitlab
+      port: 80
+  tls:
+    certResolver: le
+    domains:
+    - main: yadadev.com
+      sans:
+      - '*.sz.yadadev.com'
