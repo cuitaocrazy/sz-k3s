@@ -2,6 +2,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: gitlab-websecre
+  namespace: kube-ops
 spec:
   entryPoints:
   - websecure
