@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: oracle
+  namespace: dbs
+  labels:
+    app: oracle
+spec:
+  ports:
+  - port: 1521
+    name: oracle
+  - port: 5500
+    name: oracle-em
+  clusterIP: None
+  selector:
+    app: oracle
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: oracle
+  namespace: dbs
+spec:
+  serviceName: "oracle"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: oracle
+  template:
+    metadata:
+      labels:
+        app: oracle
+    spec:
+      containers:
+      - name: oracle
+        image: docker.io/store/oracle/database-enterprise:12.2.0.1
+        ports:
+        - containerPort: 5500
+          name: oracle-em
+        - containerPort: 1521
+          name: oracle
+        volumeMounts:
+        - name: oracle-data
+          mountPath: /ORCL
+  volumeClaimTemplates:
+  - metadata:
+      name: oracle-data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 8Gi
